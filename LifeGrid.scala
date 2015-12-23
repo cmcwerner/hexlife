@@ -5,7 +5,8 @@ import Array._
  */
 class LifeGrid(w:Int,h:Int) extends HexGrid(w,h) {
   val ALIVE = 'X'
-  val DEAD = ' '
+  val ALIVE2 = 'O'
+  val DEAD = '.'
   def next(past:LifeGrid) {
     for(r <- 0 until width) {
       for (c <- 0 until height) {
@@ -43,6 +44,6 @@ class LifeGrid(w:Int,h:Int) extends HexGrid(w,h) {
       }
     }
   }
-  def aliveCount(vals:Array[Char]):Int = vals.count( x => x==ALIVE)
+  def aliveCount(vals:Array[Char]):Int = vals.count( x => x!=DEAD)
 }
 
