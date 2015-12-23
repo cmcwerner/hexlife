@@ -20,7 +20,7 @@ object HexLife {
     }
     println(current)
     for (generation <- 1 to 100) {
-      next.next2(current)
+      next.next(current)
       var temp = current
       current = next
       next = temp
