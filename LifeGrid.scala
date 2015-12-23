@@ -1,9 +1,9 @@
 import Array._
-
+import scala.reflect.ClassTag
 /**
  * @author charlie
  */
-class LifeGrid(w:Int,h:Int) extends HexGrid(w,h) {
+class LifeGrid[T:>Null:ClassTag](w:Int,h:Int) extends HexGrid[T:ClassTag](w,h) {
   val ALIVE = 'X'
   val DEAD = ' '
   def next(past:LifeGrid) {
