@@ -1,24 +1,14 @@
 import Array._
-
+import LifeGrid._
 /**
  * @author charlie
  */
 class LifeGrid(w:Int,h:Int) extends HexGrid(w,h) {
-  val ALIVE = 'X'
-  val ALIVE2 = 'O'
-  val DEAD = '.'
-  def next(past:LifeGrid) {
+  def next(past:LifeGrid, rule:(Char,Int) => Char) {
     for(r <- 0 until width) {
       for (c <- 0 until height) {
         val numAlive = aliveCount(past.neighbors(r,c))
-        if (past(r,c) == ALIVE) {
-          if (numAlive >= 2 && numAlive <= 3) this(r,c) = ALIVE
-          else this(r,c) = DEAD
-        }
-        else {
-          if (numAlive == 3) this(r,c) = ALIVE
-          else this(r,c) = DEAD
-        }
+	this(r,c) = rule(past(r,c), numAlive)
       }
     }
   } 
@@ -44,6 +34,21 @@ class LifeGrid(w:Int,h:Int) extends HexGrid(w,h) {
       }
     }
   }
-  def aliveCount(vals:Array[Char]):Int = vals.count( x => x!=DEAD)
+  def aliveCount(vals:Array[Char]):Int = vals.count( x => x==ALIVE)
+
+  def r6 = (current:Char, count:Int) =>
+        if (current == ALIVE) {
+          if (count >= 2 && count <= 3) ALIVE
+          else DEAD
+        }
+        else {
+          if (count == 3) ALIVE
+          else DEAD
+        }
+
 }
 
+object LifeGrid {
+  val ALIVE = 'X'
+  val DEAD = '.'
+}
