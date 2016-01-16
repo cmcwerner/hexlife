@@ -1,4 +1,3 @@
-
 import scala.io.Source
 import Array._
 import LifeGrid._
@@ -12,6 +11,9 @@ object HexLife {
     val generations:Int = if (args.contains("-g")) args(args.indexOf("-g")+1).toInt else 10
     val printFreq:Int = if (args.contains("-p")) args(args.indexOf("-p")+1).toInt else 1
     val fileName = if (args.contains("-f")) args(args.indexOf("-f")+1) else null
+    val rules = if (args.contains("-12")) r12 else r6
+    val aliveCount = if (args.contains("-12")) aliveCount12 _ else aliveCount6 _
+
     var current = new LifeGrid(size,size)
     var next = new LifeGrid(size,size)
     val first:Array[String] = ofDim(size)
@@ -26,19 +28,9 @@ object HexLife {
     }
     println(current)
 
-    def r6 = (current:Char, count:Int) =>
-        if (current == ALIVE) {
-          if (count >= 2 && count <= 3) ALIVE
-          else DEAD
-        }
-        else {
-          if (count == 3) ALIVE
-          else DEAD
-        }
-
 
     for (generation <- 1 to generations) {
-      next.next(current, r6)
+      next.next(current, rules, aliveCount)
       var temp = current
       current = next
       next = temp

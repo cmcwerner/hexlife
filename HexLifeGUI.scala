@@ -2,6 +2,8 @@ import scala.swing._
 import scala.swing.event._
 import scala.Array._
 import java.util.Scanner
+import LifeGrid._
+
 object HexLifeGUI extends SimpleSwingApplication {
   private var myTop:Frame = null
   private var running:Boolean = false
@@ -48,7 +50,7 @@ object HexLifeGUI extends SimpleSwingApplication {
           else {running = true; updater.start()}
       }
       def nextStep = {
-        next.next2(now)
+        next.next(now, r6, aliveCount6)
           var temp = now
           now = next
           next = temp
