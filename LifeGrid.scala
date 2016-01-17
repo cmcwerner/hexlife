@@ -3,7 +3,7 @@ import LifeGrid._
 /**
  * @author charlie
  */
-class LifeGrid(w:Int,h:Int) extends HexGrid(w,h) {
+class LifeGrid(val w:Int,val h:Int) extends HexGrid(w,h) {
   def next(past:LifeGrid, rule:(Char,Double) => Char, aliveCount:(HexGrid,Int,Int) => Double) {
     for(r <- 0 until width) {
       for (c <- 0 until height) {
