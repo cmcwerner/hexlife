@@ -5,9 +5,15 @@ import Array._
  */
 class HexGrid(val width:Int, val height:Int) {
   val cells = ofDim[Char](height,width)
+  // called on grid(r,c) accesses
   // allow for out of bounds references which always result in the null character
   def apply(x:Int, y:Int):Char = 
     if (x>=0 && y>=0 && x<height && y < width) cells(x)(y) else '\u0000'
+  // called on grid(r,c) = expr assignments   
+  def update(x:Int, y:Int, v:Char) ={
+    cells(x)(y) = v
+  }
+  // fill the cells from an Array of String - each line is one row of the grid
   def init(array:Array[String]) = {
     assert(array.length == height)
     for (i <- 0 until height) {
@@ -17,6 +23,7 @@ class HexGrid(val width:Int, val height:Int) {
       }
     }
   }
+  // the standard 6 neighbors returned as an array of char
   def neighbors(row:Int, col:Int):Array[Char] = {
     val offset = if (row%2 == 0) -1 else 0
     Array(
@@ -24,6 +31,7 @@ class HexGrid(val width:Int, val height:Int) {
       this(row,col-1), this(row,col+1),
       this(row+1,col+offset),this(row+1,col+offset+1))
   }
+  // the second tier more distant 6 neighbors returned as an array of char
   def neighbors2(row:Int, col:Int):Array[Char] = {
     val offset = if (row%2 == 0) -1 else 0
     Array(
@@ -32,9 +40,7 @@ class HexGrid(val width:Int, val height:Int) {
       this(row+1,col+offset-1),this(row+1,col+offset+2),
       this(row+2,col))
   }
-  def update(x:Int, y:Int, v:Char) ={
-    cells(x)(y) = v
-  }
+  
   override def toString:String = {
     var result = ""
     for(i <- 0 until height) {
@@ -45,6 +51,5 @@ class HexGrid(val width:Int, val height:Int) {
       result = result + "\n"
     }
     result
-  }
-  
+  } 
 }
