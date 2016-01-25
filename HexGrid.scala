@@ -27,18 +27,18 @@ class HexGrid(val width:Int, val height:Int) {
   def neighbors(row:Int, col:Int):Array[Char] = {
     val offset = if (row%2 == 0) -1 else 0
     Array(
-      this(row-1,col+offset),this(row-1,col+offset+1),
-      this(row,col-1), this(row,col+1),
-      this(row+1,col+offset),this(row+1,col+offset+1))
+         this(row-1,col+offset), this(row-1,col+offset+1),
+      this(row,col-1),      /* r,c */         this(row,col+1),
+         this(row+1,col+offset),this(row+1,col+offset+1))
   }
   // the second tier more distant 6 neighbors returned as an array of char
   def neighbors2(row:Int, col:Int):Array[Char] = {
     val offset = if (row%2 == 0) -1 else 0
     Array(
-      this(row-2,col),
-      this(row-1,col+offset-1),this(row-1,col+offset+2),
-      this(row+1,col+offset-1),this(row+1,col+offset+2),
-      this(row+2,col))
+                         this(row-2,col),
+      this(row-1,col+offset-1), /*r,c*/  this(row-1,col+offset+2),
+      this(row+1,col+offset-1),          this(row+1,col+offset+2),
+                           this(row+2,col))
   }
   
   override def toString:String = {
