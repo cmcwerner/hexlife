@@ -2,14 +2,13 @@ import scala.swing._
 import scala.swing.event._
 import scala.Array._
 import java.util.Scanner
-import LifeGrid._
 
-class HexLifeGUI(current:LifeGrid) extends MainFrame {
+class HexLifeGUI(current:LifeGrid, other:LifeGrid) extends MainFrame {
   title = "Hex Life"
   private var running:Boolean = false
   var now:LifeGrid = current
   // second grid used in the updating process
-  var next:LifeGrid = new LifeGrid(current.w, current.h)
+  var next:LifeGrid = other
 
   var generation = 0
       
@@ -35,7 +34,7 @@ class HexLifeGUI(current:LifeGrid) extends MainFrame {
     }
     // the update method called every time interval in response to the updater timer running out
     def nextStep = {
-      next.next(now, r6, aliveCount6)
+      next.next(now)
       // swap now and next
       var temp = now
       now = next

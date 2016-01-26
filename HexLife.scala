@@ -1,6 +1,5 @@
 import scala.io.Source
 import Array._
-import LifeGrid._
 
 /**
  * @author charlie
@@ -13,20 +12,19 @@ object HexLife {
     val generations:Int = if (args.contains("-g")) args(args.indexOf("-g")+1).toInt else 10
     val printFreq:Int = if (args.contains("-p")) args(args.indexOf("-p")+1).toInt else 1
     val fileName = if (args.contains("-f")) args(args.indexOf("-f")+1) else null
-    val rules = if (args.contains("-12")) r12 else r6
-    val aliveCount = if (args.contains("-12")) aliveCount12 _ else aliveCount6 _
+    def mkGrid = if (args.contains(".12")) new LifeGrid(size,size) with LifeRules12
+    else new LifeGrid(size,size) with LifeRules6
 
     // the initial world setup - may get intialize below - needs to be here so
     // the following two functions can reference it
-    var current = new LifeGrid(size,size)
-
+    var current = mkGrid
     // the main loop for the command line version
     def runCmdLine() {
-      var next = new LifeGrid(size,size)
+      var next = mkGrid
       println(current)
 
       for (generation <- 1 to generations) {
-        next.next(current, rules, aliveCount)
+        next.next(current)
         var temp = current
         current = next
         next = temp
@@ -39,7 +37,8 @@ object HexLife {
  
     // starts off the GUI version
     def runGUI() {
-      val myTop = new HexLifeGUI(current)
+      val other = mkGrid
+      val myTop = new HexLifeGUI(current, other)
       myTop.pack()
       myTop.visible = true
     }
