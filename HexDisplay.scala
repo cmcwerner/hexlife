@@ -5,7 +5,7 @@ import scala.swing._
  */
 class HexDisplay extends Component {
   var xsize = 10
-  private var grid:HexGrid[Cell] = null
+  private var grid:HexGrid[Cell.Value] = null
   private val dotSize = 4
   private val scale = 4
   override def paint(g:Graphics2D) {
@@ -21,7 +21,7 @@ class HexDisplay extends Component {
   def rowOffset(row:Int) = if (row%2 == 0) 0 else scale/2
   minimumSize = new Dimension(500,500)
   preferredSize = minimumSize
-  def update(grid:HexGrid[Cell]) {
+  def update(grid:HexGrid[Cell.Value]) {
     this.grid = grid
     this.repaint()
   }

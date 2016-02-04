@@ -1,22 +1,21 @@
 import Array._
+import Cell._
 import scala.reflect.ClassTag
 /**
  * @author charlie
  */
-class LifeGrid[T:>Null:ClassTag](w:Int,h:Int) extends HexGrid[T:ClassTag](w,h) {
-  val ALIVE = 'X'
-  val DEAD = ' '
+class LifeGrid(w:Int,h:Int) extends HexGrid[Cell.Value](w,h) {
   def next(past:LifeGrid) {
     for(r <- 0 until width) {
       for (c <- 0 until height) {
         val numAlive = aliveCount(past.neighbors(r,c))
-        if (past(r,c) == ALIVE) {
-          if (numAlive >= 2 && numAlive <= 3) this(r,c) = ALIVE
-          else this(r,c) = DEAD
+        if (past(r,c) == Alive) {
+          if (numAlive >= 2 && numAlive <= 3) this(r,c) = Alive
+          else this(r,c) = Dead
         }
         else {
-          if (numAlive == 3) this(r,c) = ALIVE
-          else this(r,c) = DEAD
+          if (numAlive == 3) this(r,c) = Alive
+          else this(r,c) = Dead
         }
       }
     }
@@ -25,13 +24,13 @@ class LifeGrid[T:>Null:ClassTag](w:Int,h:Int) extends HexGrid[T:ClassTag](w,h) {
     for(r <- 0 until width) {
       for (c <- 0 until height) {
         val numAlive = aliveCount(past.neighbors(r,c)) +0.3*aliveCount(past.neighbors2(r,c))
-        if (past(r,c) == ALIVE) {
-          if (numAlive >= 2 && numAlive <= 3.3) this(r,c) = ALIVE
-          else this(r,c) = DEAD
+        if (past(r,c) == Alive) {
+          if (numAlive >= 2 && numAlive <= 3.3) this(r,c) = Alive
+          else this(r,c) = Dead
         }
         else {
-          if (numAlive >= 2.3 && numAlive <= 2.9) this(r,c) = ALIVE
-          else this(r,c) = DEAD
+          if (numAlive >= 2.3 && numAlive <= 2.9) this(r,c) = Alive
+          else this(r,c) = Dead
         }
       }
     }
@@ -39,10 +38,10 @@ class LifeGrid[T:>Null:ClassTag](w:Int,h:Int) extends HexGrid[T:ClassTag](w,h) {
   def randomize() {
     for(r <- 0 until width) {
       for (c <- 0 until height) {
-        this(r,c) = if (Math.random() < .3) ALIVE else DEAD
+        this(r,c) = if (Math.random() < .3) Alive else Dead
       }
     }
   }
-  def aliveCount(vals:Array[Char]):Int = vals.count( x => x==ALIVE)
+  def aliveCount(vals:Array[Cell.Value]):Int = vals.count( x => x==Alive)
 }
 
